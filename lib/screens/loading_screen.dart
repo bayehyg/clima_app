@@ -1,6 +1,7 @@
 import 'package:clima_app/services/location.dart';
+import 'package:clima_app/services/networking.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+
 
 
 class LoadingScreen extends StatefulWidget {
@@ -10,18 +11,23 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
 
-
   @override
   void initState() {
-    getLocation();
+    getLocationData();
     super.initState();
   }
+  late double lat;
+  late double long;
 
-  void getLocation() async {
+
+  Future<void> getLocationData() async {
     LocationService locate = LocationService();
     await locate.getCurrentLocation();
-    print(locate.lat);
-    print(locate.long);
+    lat = locate.lat!;
+    long = locate.long!;
+    NetworkService net = NetworkService(lat: lat, long: long);
+    var weatherData = await net.getData();
+    print(weatherData);
   }
 
   @override

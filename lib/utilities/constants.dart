@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const kTempTextStyle = TextStyle(
   fontFamily: 'Spartan MB',
+  color: Color(0xff8FD4CB),
   fontSize: 100.0,
 );
 
-const kMessageTextStyle = TextStyle(
-  fontFamily: 'Spartan MB',
-  fontSize: 60.0,
+var kMessageTextStyle = GoogleFonts.lato(
+  fontWeight: FontWeight.w700,
+  fontSize: 45.0,
 );
 
-const kButtonTextStyle = TextStyle(
-  fontSize: 30.0,
-  fontFamily: 'Spartan MB',
+var kButtonTextStyle = GoogleFonts.robotoFlex(
+  color: Colors.white,
+  fontSize: 25.0,
 );
 
 const kConditionTextStyle = TextStyle(

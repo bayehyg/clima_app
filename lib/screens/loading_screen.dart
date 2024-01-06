@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:clima_app/screens/location_screen.dart';
 import 'package:clima_app/services/location.dart';
-import 'package:clima_app/services/networking.dart';
+import 'package:clima_app/services/weather.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 
@@ -16,30 +21,31 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getLocationData();
     super.initState();
   }
-  late double lat;
-  late double long;
 
 
   Future<void> getLocationData() async {
-    LocationService locate = LocationService();
-    await locate.getCurrentLocation();
-    lat = locate.lat!;
-    long = locate.long!;
-    NetworkService net = NetworkService(lat: lat, long: long);
-    var weatherData = await net.getData();
-    print(weatherData);
+    WeatherModel weather = WeatherModel();
+    dynamic data = await weather.getLocation();
+    navigateToLocationScreen(data);
+  }
+
+  void navigateToLocationScreen(dynamic data) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LocationScreen(locationWeather: data)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-          },
-          child: Text('Get Location'),
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100,
         ),
-      ),
-    );
+        ),
+      );
+
   }
 }
